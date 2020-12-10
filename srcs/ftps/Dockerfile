@@ -6,9 +6,10 @@ WORKDIR /dir/
 
 RUN apk -U upgrade
 
-RUN apk add --no-cache 
+RUN apk add --no-cache vsftpd
 
 
-EXPOSE 80 443
+EXPOSE 21 21000-21010
+VOLUME ftp/ftp
 
 CMD bash boot.sh
