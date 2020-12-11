@@ -1,10 +1,22 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    metallb.yaml                                       :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/12/11 13:33:53 by cbach             #+#    #+#              #
+#    Updated: 2020/12/11 13:34:35 by cbach            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
   namespace: metallb-system
   name: config
 data:
-  config: 
+  config:
     address-pools:
     - # A name for the address pool. Services can request allocation
       # from a specific address pool using this name, by listing this
@@ -13,7 +25,7 @@ data:
       # Protocol can be used to select how the announcement is done.
       # Supported values are bgp and layer2.
       protocol: Layer2
-      
+
       # A list of IP address ranges over which MetalLB has
       # authority. You can list multiple ranges in a single pool, they
       # will all share the same settings. Each range can be either a

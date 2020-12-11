@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    boot.sh                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/12/11 13:34:12 by cbach             #+#    #+#              #
+#    Updated: 2020/12/11 13:34:35 by cbach            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 #phpmyadmin
 wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz \
 && tar xvfz phpMyAdmin-latest-all-languages.tar.gz \
