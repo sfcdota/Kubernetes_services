@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Dockerfile                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
+#    By: cbach <cbach@student.21-school.ru>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:33:32 by cbach             #+#    #+#              #
-#    Updated: 2020/12/11 13:35:38 by cbach            ###   ########.fr        #
+#    Updated: 2020/12/14 18:08:13 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,6 @@ RUN apk -U upgrade
 
 RUN apk add --no-cache grafana
 
-EXPOSE 80 443
+EXPOSE 3000
 
 CMD bash boot.sh
