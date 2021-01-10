@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    localhost                                          :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/12/11 13:34:05 by cbach             #+#    #+#              #
+#    Updated: 2020/12/11 13:34:35 by cbach            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 server {
 	listen 80;
 	listen [::]:80;
@@ -20,5 +32,13 @@ server {
 	location ~ \.php$ {
 		include snippets/fastcgi-php.conf;
 		fastcgi_pass unix:/var/run/php/php7.3-fpm.sock;
+	}
+	location /wordpress
+	{
+		return 307 https://$server_name:5050/ ;
+	}
+	location /phpmyadmin
+	{
+		 proxy_pass https://$server_name:5000/ ;
 	}
 }

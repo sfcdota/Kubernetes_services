@@ -5,10 +5,13 @@
 #                                                     +:+ +:+         +:+      #
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/12/11 13:34:02 by cbach             #+#    #+#              #
+#    Created: 2020/12/11 13:34:22 by cbach             #+#    #+#              #
 #    Updated: 2020/12/11 13:34:35 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+#phpmyadmin
+wget http://wordpress.org/latest.tar.gz && tar xvfz latest.tar.gz && mv wordpress/* /var/www/html/
 
 #NGINX
 

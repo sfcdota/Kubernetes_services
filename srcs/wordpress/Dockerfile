@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Dockerfile                                         :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/12/11 13:34:27 by cbach             #+#    #+#              #
+#    Updated: 2020/12/11 13:34:35 by cbach            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 FROM alpine
 
 LABEL maintainer = "cbach"
@@ -8,14 +20,8 @@ RUN apk -U upgrade
 
 RUN apk add --no-cache -y wget php php-mysql php-fpm php-curl php-gd php-intl php-mbstring php-soap php-xml php-xmlrpc php-zip
 
-RUN wget http://wordpress.org/latest.tar.gz && tar xvfz latest.tar.gz && mv wordpress/* /var/www/html/
-
-RUN chown -R www-data /var/www/html/
-
-RUN chmod 755 /var/www/html
-
 COPY ./srcs/ .
 
-EXPOSE 80 443
+EXPOSE 5050
 
 CMD bash boot.sh

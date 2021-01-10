@@ -1,27 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Dockerfile                                         :+:      :+:    :+:    #
+#    boot.sh                                            :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/12/11 13:33:43 by cbach             #+#    #+#              #
-#    Updated: 2020/12/11 13:33:44 by cbach            ###   ########.fr        #
+#    Created: 2020/12/11 13:33:45 by cbach             #+#    #+#              #
+#    Updated: 2020/12/11 13:34:35 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FROM alpine
-
-LABEL maintainer = "cbach"
-
-WORKDIR /dir/
-
-RUN apk -U upgrade
-
-RUN apk add --no-cache vsftpd
-
-
-EXPOSE 21 21000-21010
-VOLUME ftp/ftp
-
-CMD bash boot.sh
