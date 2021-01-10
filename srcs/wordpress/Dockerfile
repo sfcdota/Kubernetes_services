@@ -6,7 +6,7 @@ WORKDIR /dir/
 
 RUN apk -U upgrade
 
-RUN apk add --no-cache wget -y
+RUN apk add --no-cache -y wget php php-mysql php-fpm php-curl php-gd php-intl php-mbstring php-soap php-xml php-xmlrpc php-zip
 
 RUN wget http://wordpress.org/latest.tar.gz && tar xvfz latest.tar.gz && mv wordpress/* /var/www/html/
 
