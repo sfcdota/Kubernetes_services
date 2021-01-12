@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    nginx.yaml                                         :+:      :+:    :+:    #
+#    nginx-deployment.yaml                              :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cbach <cbach@student.21-school.ru>         +#+  +:+       +#+         #
+#    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:34:10 by cbach             #+#    #+#              #
-#    Updated: 2020/12/14 18:08:13 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/12 13:30:29 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,25 +19,18 @@ spec:
     matchLabels:
       app: nginx
   replicas: 1
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: nginx
     spec:
       containers:
-       name: nginx
-        image: nginx:1.14.2
+      - name: nginx
+        image: nginx
         imagePullPolicy: Never
         ports:
-         - containerPort: 80
-         - containerPort: 443
----
-apiVersion: v1
-kind: LoadBalancer
-metadata:
-  name: nginx
-spec:
-  type: LoadBalancer
-  ports:
-   port: 8080
-    targetPort: 8080
+          - containerPort: 80
+          - containerPort: 443
+          - containerPort: 22
