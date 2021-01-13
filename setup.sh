@@ -6,10 +6,11 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:34:32 by cbach             #+#    #+#              #
-#    Updated: 2021/01/12 17:52:29 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/12 18:27:27 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+#set DIR variables
 NGINX_DIR=srcs/nginx
 FTPS_DIR=srcs/ftps
 GRAFANA_DIR=srcs/grafana
@@ -19,7 +20,11 @@ MYSQL_DIR=srcs/mysql
 PHPMYADMIN_DIR=srcs/phpmyadmin
 WORDPRESS_DIR=srcs/wordpress
 
+
+#start minikube VM
 minikube start --vm-driver=virtualbox
+
+
 # clearing
 eval $(minikube docker-env)
 # kubectl delete daemonsets,replicasets,services,deployments,pods,rc --all
@@ -33,11 +38,8 @@ eval $(minikube docker-env)
 # minikube addons enable metallb && kubectl apply -f srcs/metallb/metallb.yaml && kubectl create -f srcs/nginx/nginx-service.yaml
 #minikube addons enable metallb
 
-# kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml
-# kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml
-# # On first install only
-# kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
-# kubectl apply -f srcs/metallb/metallb.yaml
+#set metallb config
+kubectl apply -f srcs/metallb/metallb.yaml
 
 
 
