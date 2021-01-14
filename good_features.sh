@@ -5,6 +5,11 @@ docker rm -f $(docker ps -a -q) && docker build -t nginx srcs/nginx/ && kubectl 
 
 kubectl exec -it $(kubectl get pods --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}')     -- pkill nginx
 
+#ftps check connection
+nc -zv 172.17.0.2 21
+ftp 172.17.0.2
+docker build -t ftps . && docker run -dit -p 21:21 -p 22800-23000:22800-23000 --name=ftps ftps
+
 export IP=$(minikube ip)
 cub=$(echo $IP | grep -Eo "[0-9]+$")
 IP=$(echo $IP | sed -e "s/\.[0-9]\+$//")
@@ -30,7 +35,7 @@ addons disable && addons enable . Каждый раз после этого и �
 внутри каждой коносли в которой работаем. проверить к чему подключен докер проще всего docker ps
 
 
-docker run -dit -p 8080:80 -p 443:443 server && docker container ls
+docker run -dit --name=nginx -p 8080:80 -p 443:443 nginx && docker container ls
 
 docker run -dit -p 21:21 ftps && docker container ls
 

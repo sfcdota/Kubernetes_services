@@ -6,7 +6,7 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:34:08 by cbach             #+#    #+#              #
-#    Updated: 2021/01/13 23:57:53 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/14 01:52:03 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,19 +15,14 @@ FROM alpine
 LABEL maintainer = "cbach"
 
 WORKDIR /dir/
+COPY ./srcs .
 
-RUN apk -U upgrade
-
-RUN apk add --no-cache  nginx \
+RUN apk -U upgrade &&	apk add --no-cache  nginx \
 						openssh \
 						openssl \
 						openrc \
-						supervisor
-
-
-COPY ./srcs .
-
-RUN mkdir -p /run/nginx /var/run/sshd /var/log/supervisor /var/www/html && mv sshd_config /etc/ssh/sshd_config && \
+						supervisor && \
+	mkdir -p /run/nginx /var/run/sshd /var/log/supervisor /var/www/html && mv sshd_config /etc/ssh/sshd_config && \
 	mv localhost /etc/nginx/conf.d/default.conf && mv supervisord.conf /etc/supervisord.conf && \
 	chown -R 777 /var/www/html/ && \
 	openssl req -x509 -nodes -newkey rsa:2048 \
