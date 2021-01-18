@@ -6,7 +6,7 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:34:25 by cbach             #+#    #+#              #
-#    Updated: 2021/01/17 14:09:57 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/18 21:16:18 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,12 @@ server {
 	index index.php index.html index.htm;
 	location / {
 		autoindex on;
-		#try_files $uri $uri/ /index.php?$args;
+		try_files $uri $uri/ /index.php?$args;
 	}
 	location ~ \.php$ {
     	include fastcgi_params;
     	fastcgi_intercept_errors on;
-    	fastcgi_pass 172.17.0.2:5000;
+    	fastcgi_pass unix:/run/php/php7.4-fpm.sock;
     	fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
 	}
 }
