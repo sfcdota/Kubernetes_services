@@ -6,7 +6,7 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:34:08 by cbach             #+#    #+#              #
-#    Updated: 2021/01/14 01:52:03 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/16 14:40:39 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ FROM alpine
 LABEL maintainer = "cbach"
 
 WORKDIR /dir/
-COPY ./srcs .
+COPY ./configs .
 
 RUN apk -U upgrade &&	apk add --no-cache  nginx \
 						openssh \

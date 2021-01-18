@@ -6,7 +6,41 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:34:19 by cbach             #+#    #+#              #
-#    Updated: 2020/12/11 13:34:35 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/17 15:25:39 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+apiVersion: v1
+kind: Service
+metadata:
+  name: phpmyadmin
+spec:
+  ports:
+    - port: 5000
+  selector:
+    app: phpmyadmin
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpmyadmin
+spec:
+  selector:
+    matchLabels:
+      app: phpmyadmin
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin
+    spec:
+      containers:
+      - image: phpmyadmin
+        name: phpmyadmin
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+          name: phpmyadmin

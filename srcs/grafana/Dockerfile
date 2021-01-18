@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Dockerfile                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cbach <cbach@student.21-school.ru>         +#+  +:+       +#+         #
+#    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:33:32 by cbach             #+#    #+#              #
-#    Updated: 2020/12/14 18:08:13 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/15 17:31:06 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,7 @@ LABEL maintainer = "cbach"
 
 WORKDIR /dir/
 
-RUN apk -U upgrade
-
-RUN apk add --no-cache grafana
+RUN apk -U upgrade && apk add --no-cache grafana
 
 EXPOSE 3000
 

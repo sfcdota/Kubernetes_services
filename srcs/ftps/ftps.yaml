@@ -6,10 +6,23 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:33:39 by cbach             #+#    #+#              #
-#    Updated: 2021/01/14 15:11:48 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/18 17:13:18 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ftps-pv-claim
+  labels:
+    app: ftps
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
@@ -26,6 +39,10 @@ spec:
       labels:
         app: ftps
     spec:
+      volumes:
+      - name: ftps-persistent-storage
+        persistentVolumeClaim:
+          claimName: ftps-pv-claim
       containers:
       - name: ftps
         image: ftps
@@ -34,6 +51,9 @@ spec:
           - containerPort: 21
           - containerPort: 22800
           - containerPort: 22801
+        volumeMounts:
+        - name: ftps-persistent-storage
+          mountPath: /dir
 ---
 apiVersion: v1
 kind: Service
