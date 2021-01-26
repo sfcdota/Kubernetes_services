@@ -6,11 +6,11 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:33:32 by cbach             #+#    #+#              #
-#    Updated: 2021/01/15 17:31:06 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/22 15:04:27 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FROM alpine
+FROM alpine:3.12
 
 LABEL maintainer = "cbach"
 

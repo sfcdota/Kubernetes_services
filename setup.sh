@@ -6,7 +6,7 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:34:32 by cbach             #+#    #+#              #
-#    Updated: 2021/01/12 18:27:27 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/26 18:37:24 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,38 +23,42 @@ WORDPRESS_DIR=srcs/wordpress
 
 #start minikube VM
 minikube start --vm-driver=virtualbox
-
-
-# clearing
 eval $(minikube docker-env)
-# kubectl delete daemonsets,replicasets,services,deployments,pods,rc --all
-# docker rm -f $(docker ps -a -q)
-# docker system prune -f
-# sleep 3
+minikube addons enable metallb
 
 
-# #metallb
-# kubectl delete -f srcs/nginx/nginx-service.yaml && minikube addons disable metallb && \
-# minikube addons enable metallb && kubectl apply -f srcs/metallb/metallb.yaml && kubectl create -f srcs/nginx/nginx-service.yaml
-#minikube addons enable metallb
+lastoctet=$(echo $(minikube ip) | grep -Eo "[0-9]+$")
+lastoctet=$(($lastoctet + 1))
+freeipstart=$(echo $(minikube ip) | sed "s/[0-9]\{3,\}$/"$lastoctet"/g")
+freeipend=$(echo $(minikube ip) | sed "s/[0-9]\{3,\}$/"$(($lastoctet + 10))"/g")
+echo "minikube ip = $(minikube ip)\nFirst free ip in minikube subnet = $freeipstart"
+echo "changing metallb config to working properly with random minikube ip..."
+sed -i "s/IPRANGE/"$freeipstart"-"$freeipend"/g" srcs/metallb/metallb.yaml
+echo "iprange is now set"
+echo "set pasv_address to ftps config to support ftp join via terminal"
+sed -i "s/PASV_RANGE/pasv_address="$freeipstart"/g" srcs/ftps/configs/vsftpd.conf
+
 
 #set metallb config
 kubectl apply -f srcs/metallb/metallb.yaml
 
-
-
 #images
 docker build -t nginx $NGINX_DIR
+sleep 2
+docker build -t phpmyadmin $PHPMYADMIN_DIR
+sleep 2
+docker build -t ftps $FTPS_DIR
+sleep 2
+docker build -t mysql $MYSQL_DIR
+sleep 2
+docker build -t wordpress $WORDPRESS_DIR
+sleep 2
 
 
 #configs
-kubectl create -f $NGINX_DIR/nginx-deployment.yaml
-kubectl create -f $NGINX_DIR/nginx-service.yaml
-
-
-# to get into nginx service:
-# minikube tunnel
-# kubectl get svc
-# then go external-ip with or without some ports
-
+kubectl apply -f $NGINX_DIR/nginx.yaml
+kubectl apply -f $PHPMYADMIN_DIR/phpmyadmin.yaml
+kubectl apply -f $FTPS_DIR/ftps.yaml
+kubectl apply -f $MYSQL_DIR/mysql.yaml
+kubectl apply -f $WORDPRESS_DIR/wordpress.yaml
 

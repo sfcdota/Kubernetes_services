@@ -10,6 +10,15 @@ nc -zv 172.17.0.2 21
 ftp 172.17.0.2
 docker build -t ftps . && docker run -dit -p 21:21 -p 22800-23000:22800-23000 --name=ftps ftps
 
+
+lastoctet=$(echo $(minikube ip) | grep -Eo "[0-9]+$")
+lastoctet=$(($lastoctet + 1))
+echo $(echo $(minikube ip) | sed "s/[0-9]\{3,\}$/"$lastoctet"228/g")
+
+
+kubectl get svc | grep ftps | grep -Eo $(echo $(minikube ip) | sed -e "s/\.[0-9]\+$//")".[0-9]+"
+
+
 export IP=$(minikube ip)
 cub=$(echo $IP | grep -Eo "[0-9]+$")
 IP=$(echo $IP | sed -e "s/\.[0-9]\+$//")

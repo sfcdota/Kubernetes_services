@@ -6,7 +6,7 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:34:25 by cbach             #+#    #+#              #
-#    Updated: 2021/01/18 21:16:18 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/21 20:18:19 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ server {
 	location ~ \.php$ {
     	include fastcgi_params;
     	fastcgi_intercept_errors on;
-    	fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+    	fastcgi_pass 127.0.0.1:9000;
     	fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
 	}
 }

@@ -6,18 +6,18 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:33:48 by cbach             #+#    #+#              #
-#    Updated: 2021/01/17 13:15:44 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/22 15:04:30 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FROM alpine
+FROM alpine:3.12
 
 LABEL maintainer = "cbach"
 
 WORKDIR /dir/
 COPY ./srcs .
 
-RUN apk -U upgrade && apk add --no-cache
+RUN apk update && apk upgrade && apk add --no-cache
 
 
 EXPOSE 80 443
