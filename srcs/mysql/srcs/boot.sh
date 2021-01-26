@@ -6,16 +6,26 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:33:55 by cbach             #+#    #+#              #
-#    Updated: 2021/01/26 14:50:18 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/26 19:06:57 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-mysql -u root -e "CREATE DATABASE wordpress;\
-	CREATE USER 'cbach'@'%';\
-	SET password FOR 'cbach'@'%' = password('pass');\
-	GRANT ALL PRIVILEGES ON wordpress.* TO 'cbach'@'%' IDENTIFIED BY 'pass';\
-	FLUSH PRIVILEGES;" && service mariadb stop && mysqld_safe
+# openrc default
+# service mariadb setup && cp mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf && service mariadb start && \
+# touch /var/log/mysql.log && chown mysql:mysql /var/log/mysql.log && \
+# chmod 777 /var/log/mysql.log &&
+# mysql -u root -e "CREATE DATABASE wordpress;\
+# 	CREATE USER 'cbach'@'%';\
+# 	SET password FOR 'cbach'@'%' = password('pass');\
+# 	GRANT ALL PRIVILEGES ON wordpress.* TO 'cbach'@'%' IDENTIFIED BY 'pass';\
+# 	FLUSH PRIVILEGES;" && service mariadb stop
 
+/usr/bin/mysqld_safe
+status = $?
+if [ $? -ne 0 ]; then
+  echo "Failed to start mysql: $?"
+  exit $?
+fi
 
 #mysql_install_db --user=root --basedir=/usr --datadir=/var/lib/mysql --pid-file=/run/mysqld/mysqld.pid --port=3306 --bind-address=0.0.0.0 --skip-networking=OFF #dp porta vse rabotalo
 #sleep 3
