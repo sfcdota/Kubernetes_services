@@ -6,7 +6,81 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:33:50 by cbach             #+#    #+#              #
-#    Updated: 2020/12/11 13:34:35 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/27 15:11:15 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+apiVersion: v1
+kind: Service
+metadata:
+  name: influxdb
+  labels:
+    app: influxdb
+spec:
+  ports:
+    - port: 8086
+  selector:
+    app: influxdb
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: influxdb-pv-claim
+  labels:
+    app: influxdb
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sys-pv-claim
+  labels:
+    app: influxdb
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: influxdb
+spec:
+  selector:
+    matchLabels:
+      app: influxdb
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      containers:
+      - image: influxdb
+        name: influxdb
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8086
+          name: influxdb
+        volumeMounts:
+        - name: influxdb-persistent-storage
+          mountPath: /var/lib/influxdb
+        - name: sys-persistent-storage
+          mountPath: /sys/fs/cgroup
+      volumes:
+      - name: influxdb-persistent-storage
+        persistentVolumeClaim:
+          claimName: influxdb-pv-claim
+      - name: sys-persistent-storage
+        persistentVolumeClaim:
+          claimName: sys-pv-claim
