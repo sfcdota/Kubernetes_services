@@ -1,7 +1,9 @@
-docker rm -f $(docker ps -aq)
+eval $(minikube docker-env)
+kubectl delete -f mysql.yaml
+kubectl delete $(kubectl get pods -o name | grep mysql)
+docker rm -f $(docker ps -f "name=mysql" --format "{{.ID}}")
+docker rmi -f mysql
 docker build -t mysql .
-docker run -dit --name=mysql -p 3306:3306  mysql
+kubectl apply -f mysql.yaml
 sleep 2
-kubectl rollout restart deployment mysql
-sleep 5
-docker exec -it mysql sh
+kubectl exec -it $(kubectl get pods -o name | grep mysql) -- sh

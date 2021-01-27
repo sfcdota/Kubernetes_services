@@ -1,4 +1,5 @@
 eval $(minikube docker-env)
+eval $(minikube -p minikube docker-env)
 ssh-keygen -f "/home/sfcdota/.ssh/known_hosts" -R "192.168.99.114"
 
 docker rm -f $(docker ps -a -q) && docker build -t nginx srcs/nginx/ && kubectl rollout restart deployment

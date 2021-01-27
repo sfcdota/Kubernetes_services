@@ -6,7 +6,7 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:34:30 by cbach             #+#    #+#              #
-#    Updated: 2021/01/26 16:29:52 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/27 12:15:11 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,19 +23,6 @@ spec:
   selector:
     app: wordpress
   type: LoadBalancer
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: wp-pv-claim
-  labels:
-    app: wordpress
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -62,10 +49,3 @@ spec:
         ports:
         - containerPort: 5050
           name: wordpress
-        volumeMounts:
-        - name: wordpress-persistent-storage
-          mountPath: /var/www/html
-      volumes:
-      - name: wordpress-persistent-storage
-        persistentVolumeClaim:
-          claimName: wp-pv-claim

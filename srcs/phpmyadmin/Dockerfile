@@ -6,7 +6,7 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:34:17 by cbach             #+#    #+#              #
-#    Updated: 2021/01/26 14:44:32 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/26 23:13:37 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,10 @@ RUN apk -U upgrade && apk add --no-cache nginx wget php7-fpm php7-common php7-ic
 		mkdir -p /run/nginx /var/www/html && mv localhost /etc/nginx/conf.d/default.conf && \
 		mv supervisord.conf /etc/supervisord.conf && cd /var/www/html && \
 		wget http://files.directadmin.com/services/all/phpMyAdmin/phpMyAdmin-5.0.2-all-languages.tar.gz && \
-		tar zxvf phpMyAdmin-5.0.2-all-languages.tar.gz && rm phpMyAdmin-5.0.2-all-languages.tar.gz && \
+		tar zxf phpMyAdmin-5.0.2-all-languages.tar.gz && rm phpMyAdmin-5.0.2-all-languages.tar.gz && \
 		mv phpMyAdmin-5.0.2-all-languages phpmyadmin && \
 		cd /dir && mv config.inc.php /var/www/html/phpmyadmin/config.inc.php && \
-		mv php-fpm.conf /etc/php7/ && chmod -R 755 /var/www/html
+		mv php-fpm.conf /etc/php7/
 
 
 EXPOSE 5000
