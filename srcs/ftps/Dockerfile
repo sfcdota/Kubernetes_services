@@ -6,7 +6,7 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:33:43 by cbach             #+#    #+#              #
-#    Updated: 2021/01/22 15:04:23 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/28 23:59:15 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LABEL maintainer = "cbach"
 
 WORKDIR /dir/
 COPY ./configs/ .
-
+VOLUME /root
 RUN apk update && apk upgrade && apk add --no-cache vsftpd supervisor openssl && mv supervisord.conf /etc/supervisord.conf && \
 	openssl req -x509 -nodes -newkey rsa:2048 \
 	-keyout /etc/ssl/certs/ftps.key -out /etc/ssl/certs/ftps.pem \

@@ -6,7 +6,7 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:33:48 by cbach             #+#    #+#              #
-#    Updated: 2021/01/28 16:10:43 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/28 22:54:50 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ FROM alpine:3.12
 LABEL maintainer = "cbach"
 
 COPY ./srcs .
-VOLUME /var/lib/influxdb
+VOLUME /root/
 VOLUME /sys/fs/cgroup
 ADD	https://dl.influxdata.com/telegraf/releases/telegraf-1.17.1_static_linux_amd64.tar.gz /
 RUN apk update && apk upgrade && apk add --no-cache influxdb supervisor && \
