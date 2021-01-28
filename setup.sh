@@ -6,7 +6,7 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:34:32 by cbach             #+#    #+#              #
-#    Updated: 2021/01/26 18:37:24 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/28 15:54:55 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,16 +43,43 @@ sed -i "s/PASV_RANGE/pasv_address="$freeipstart"/g" srcs/ftps/configs/vsftpd.con
 kubectl apply -f srcs/metallb/metallb.yaml
 
 #images
-docker build -t nginx $NGINX_DIR
-sleep 2
-docker build -t phpmyadmin $PHPMYADMIN_DIR
-sleep 2
-docker build -t ftps $FTPS_DIR
-sleep 2
-docker build -t mysql $MYSQL_DIR
-sleep 2
-docker build -t wordpress $WORDPRESS_DIR
-sleep 2
+docker build --no-cache -t nginx $NGINX_DIR
+while [ $status -ne 0 ]; do
+  docker build --no-cache -t nginx $NGINX_DIR
+  sleep 2
+done
+docker build --no-cache -t phpmyadmin $PHPMYADMIN_DIR
+while [ $status -ne 0 ]; do
+  docker build --no-cache -t phpmyadmin $PHPMYADMIN_DIR
+  sleep 2
+done
+docker build --no-cache -t ftps $FTPS_DIR
+while [ $status -ne 0 ]; do
+  docker build --no-cache -t ftps $FTPS_DIR
+  sleep 2
+done
+docker build --no-cache -t mysql $MYSQL_DIR
+while [ $status -ne 0 ]; do
+  docker build --no-cache -t mysql $MYSQL_DIR
+  sleep 2
+done
+docker build --no-cache -t wordpress $WORDPRESS_DIR
+while [ $status -ne 0 ]; do
+  docker build --no-cache -t wordpress $WORDPRESS_DIR
+  sleep 2
+done
+
+docker build --no-cache -t grafana $GRAFANA_DIR
+while [ $status -ne 0 ]; do
+  docker build --no-cache -t grafana $GRAFANA_DIR
+  sleep 2
+done
+
+docker build --no-cache -t influxdb $INFLUXDB_DIR
+while [ $status -ne 0 ]; do
+  docker build --no-cache -t influxdb $INFLUXDB_DIR
+  sleep 2
+done
 
 
 #configs
@@ -61,4 +88,5 @@ kubectl apply -f $PHPMYADMIN_DIR/phpmyadmin.yaml
 kubectl apply -f $FTPS_DIR/ftps.yaml
 kubectl apply -f $MYSQL_DIR/mysql.yaml
 kubectl apply -f $WORDPRESS_DIR/wordpress.yaml
-
+kubectl apply -f $GRAFANA_DIR/grafana.yaml
+kubectl apply -f $INFLUXDB_DIR/influxdb.yaml

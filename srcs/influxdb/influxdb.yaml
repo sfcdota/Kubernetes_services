@@ -6,7 +6,7 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:33:50 by cbach             #+#    #+#              #
-#    Updated: 2021/01/27 15:11:15 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/28 15:43:58 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: sys-pv-claim
+  name: influxsys-pv-claim
   labels:
     app: influxdb
 spec:
@@ -75,12 +75,17 @@ spec:
         volumeMounts:
         - name: influxdb-persistent-storage
           mountPath: /var/lib/influxdb
-        - name: sys-persistent-storage
+        - name: influxsys-persistent-storage
           mountPath: /sys/fs/cgroup
+        - name: docker-socket
+          mountPath: /var/run/docker.sock
       volumes:
       - name: influxdb-persistent-storage
         persistentVolumeClaim:
           claimName: influxdb-pv-claim
-      - name: sys-persistent-storage
+      - name: influxsys-persistent-storage
         persistentVolumeClaim:
-          claimName: sys-pv-claim
+          claimName: influxsys-pv-claim
+      - name: docker-socket
+        hostPath:
+          path: /var/run/docker.sock

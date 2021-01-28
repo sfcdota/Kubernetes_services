@@ -2,6 +2,10 @@ eval $(minikube docker-env)
 eval $(minikube -p minikube docker-env)
 ssh-keygen -f "/home/sfcdota/.ssh/known_hosts" -R "192.168.99.114"
 
+rewrite /phpmyadmin/(.*) /$1  break;
+
+kubectl cp [pod name]:[file location in pod] [dir] #for copy file from pod to local
+kubectl cp grafana-deployment-d4f77759-dp5wc:/dir/grafana/data/grafana.db grafana.db #example
 docker rm -f $(docker ps -a -q) && docker build -t nginx srcs/nginx/ && kubectl rollout restart deployment
 
 kubectl exec -it $(kubectl get pods --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}')     -- pkill nginx
