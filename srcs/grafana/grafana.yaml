@@ -6,14 +6,14 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:33:36 by cbach             #+#    #+#              #
-#    Updated: 2021/01/28 14:15:44 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/29 11:28:47 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
-  name: grafana-deployment
+  name: grafana
 spec:
   selector:
     matchLabels:

@@ -4,6 +4,7 @@ ssh-keygen -f "/home/sfcdota/.ssh/known_hosts" -R "192.168.99.126"
 ssh root@192.168.99.126 #pass root
 rewrite /phpmyadmin/(.*) /$1  break;
 
+curl -Ik https://192.168.99.126/wordpress
 kubectl cp [pod name]:[file location in pod] [dir] #for copy file from pod to local
 kubectl cp grafana-deployment-d4f77759-dp5wc:/dir/grafana/data/grafana.db grafana.db #example
 docker rm -f $(docker ps -a -q) && docker build -t nginx srcs/nginx/ && kubectl rollout restart deployment
@@ -31,29 +32,9 @@ nmap -sP -PR $IP.$cub | grep "Host is up"
 while [ "$?" != 1 ]
 do
     cub=$(($cub + 1))
-    nmap -sP -PR $IP.$cub | grep "Host is up"
+    nmap -sP -PR $IP.$cub > /dev/null 2>&1
 done
 IP="$IP.$cub"
-
-
-	Изменeния ip, портов и образа допускаются БЕЗ удаления предудщей сущности ( deploy, pod, svc) apply - f напишет вам "**" changed
-, значит ваши изменения применились. Если же выводит ошибку , значит точно удаляйте , и пробуйте добавить заново.
-	Для перезапуска metallb НЕ НУЖНО перезапускать миникуб. досаточно перезапустить саму metallb ( неожиданно, не правдали ? )
-addons disable && addons enable . Каждый раз после этого и КАЖДЫЙ РАЗ ПОСЛЕ СТАРТА миникуба нужно применять конфиг.
-	Иначе, даже если он вам показывает external ip  - по факту он работать не будет.
-Для небольших именений на уровне "а если так ?" не нужно пересобирать контейнер -
-залезьте внутрь kubectl exec -it *** sh и пропишите всё что вам нужно ручками ( для этого добавите нано или вим в сборку)
-	Даже если вы пересобрали докер образ, НЕ НУЖНО удалять deploy .
-Достаточно удалить под, или сделать kubectl rollout restart deployment
-и он подхватит новый образ сам ( для этого не забываем eval $(minikube docker-env)
-внутри каждой коносли в которой работаем. проверить к чему подключен докер проще всего docker ps
-
-
-docker run -dit --name=nginx -p 8080:80 -p 443:443 nginx && docker container ls
-
-docker run -dit -p 21:21 ftps && docker container ls
-
-kubectl exec -it [pod name] -- bash
 
 
 sudo docker inspect -f "{{ .NetworkSettings.IPAddress }}" nginx

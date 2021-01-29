@@ -6,7 +6,7 @@
 #    By: cbach <cbach@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/11 13:33:55 by cbach             #+#    #+#              #
-#    Updated: 2021/01/27 13:53:39 by cbach            ###   ########.fr        #
+#    Updated: 2021/01/29 15:15:29 by cbach            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,7 @@ service mariadb start
 touch /var/log/mysql.log
 chown mysql:mysql /var/log/mysql.log
 chmod 777 /var/log/mysql.log
-mysql -u root -e "CREATE DATABASE IF NOT EXISTS wordpress; " && \
-mysql wordpress < wordpress.sql
+mysql -u root -e "CREATE DATABASE wordpress; " && mysql wordpress < wordpress.sql
 mysql -u root -e "CREATE USER IF NOT EXISTS 'cbach'@'%';\
 	SET password FOR 'cbach'@'%' = password('pass');\
 	GRANT ALL PRIVILEGES ON wordpress.* TO 'cbach'@'%' IDENTIFIED BY 'pass';\
